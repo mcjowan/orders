@@ -16,14 +16,14 @@ public class AdminController {
     private final OrderService orderService;
     private final String adminApiKey;
 
-    public AdminController(OrderService orderService, @Value("${ADMIN_API_KEY}") String adminApiKey) {
+    public AdminController(OrderService orderService, @Value("${ADMIN_API_KEY:}") String adminApiKey) {
         this.orderService = orderService;
         this.adminApiKey = adminApiKey;
     }
 
     @DeleteMapping("/orders")
     public ResponseEntity<String> deleteAllOrders(@RequestHeader(value = "X-Api-Key", required = false) String apiKey) {
-        if (apiKey != null && apiKey.equals(adminApiKey)) {
+        if (apiKey != null && !adminApiKey.isBlank() && apiKey.equals(adminApiKey)) {
             orderService.deleteAll();
             return ResponseEntity.ok("deleted");
         }

@@ -24,7 +24,7 @@ services:
         condition: service_healthy
     environment:
       DB_HOST: db
-      ADMIN_API_KEY: ${ADMIN_API_KEY:?ADMIN_API_KEY must be set}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-}
     ports:
       - "8080:8080"
 
